@@ -53,6 +53,9 @@ function createAccessToken(usuario: {
 // Registra un negocio y su primer usuario administrador.
 // La transacción garantiza que no quede creado el negocio si falla la creación del usuario.
 export async function registrar(datos: RegistroInput) {
+  // Comprobamos la configuración JWT antes de crear registros en la base de datos.
+  getJwtSecret();
+
   const emailExistente = await prisma.usuario.findUnique({
     where: { email: datos.email },
     select: { id: true },
