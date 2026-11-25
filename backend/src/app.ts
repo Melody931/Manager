@@ -1,7 +1,8 @@
-
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+
+import authRoutes from "./modules/auth/auth.routes.js";
 
 const app = express();
 
@@ -27,5 +28,8 @@ app.get("/api/health", (_req, res) => {
     message: "Manager API funcionando correctamente",
   });
 });
+
+// Rutas públicas y protegidas de autenticación.
+app.use("/auth", authRoutes);
 
 export default app;
