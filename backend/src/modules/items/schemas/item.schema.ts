@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const precioSchema = z.coerce.number().finite().positive("El precio debe ser mayor que cero.");
-const costoSchema = z.union([z.coerce.number().finite().nonnegative(), z.null()]).optional();
+const costoSchema = z.number().finite().nonnegative().nullable().optional();
 
 export const crearItemSchema = z.object({
   tipo: z.enum(["PRODUCTO", "SERVICIO"]),
