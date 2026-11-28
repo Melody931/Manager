@@ -37,7 +37,7 @@ export async function listarItems(params: { busqueda?: string; pagina?: number; 
   query.set("pagina", String(params.pagina ?? 1));
   query.set("limite", String(params.limite ?? 10));
   if (params.tipo) query.set("tipo", params.tipo);
-  return apiRequest<ItemsResponse>(\`/items?\${query.toString()}\`);
+  return apiRequest<ItemsResponse>(`/items?${query.toString()}`);
 }
 
 export async function crearItem(input: ItemInput) {
@@ -45,9 +45,9 @@ export async function crearItem(input: ItemInput) {
 }
 
 export async function actualizarItem(id: number, input: Partial<ItemInput>) {
-  return apiRequest<{ data: Item }>(\`/items/\${id}\`, { method: "PUT", body: JSON.stringify(input) });
+  return apiRequest<{ data: Item }>(`/items/${id}`, { method: "PUT", body: JSON.stringify(input) });
 }
 
 export async function eliminarItem(id: number) {
-  return apiRequest<{ data: { mensaje: string } }>(\`/items/\${id}\`, { method: "DELETE" });
+  return apiRequest<{ data: { mensaje: string } }>(`/items/${id}`, { method: "DELETE" });
 }
