@@ -26,9 +26,9 @@ export default function AppLayout() {
               to={link.to}
               end={link.end}
               className={({ isActive }) =>
-                \`flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition \${isActive
+                `flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition ${isActive
                   ? "bg-cyan-400/10 text-cyan-300"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-white"}\`
+                  : "text-slate-400 hover:bg-slate-800 hover:text-white"}`
               }
             >
               <span className="w-5 text-center text-base" aria-hidden="true">{link.icon}</span>
