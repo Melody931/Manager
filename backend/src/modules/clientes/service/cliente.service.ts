@@ -4,7 +4,14 @@ import type { CrearClienteInput, ActualizarClienteInput, ListarClientesQuery } f
 export async function listarClientes(negocioId: number, filtros: ListarClientesQuery) {
   const where = {
     negocioId,
-    ...(filtros.busqueda ? { nombre: { contains: filtros.busqueda, mode: "insensitive" as const } } : {}),
+    ...(filtros.busqueda
+      ? {
+          OR: [
+            { nombre: { contains: filtros.busqueda, mode: "insensitive" as const } },
+            { telefono: { contains: filtros.busqueda, mode: "insensitive" as const } },
+          ],
+        }
+      : {}),
   };
   const [clientes, total] = await Promise.all([
     prisma.cliente.findMany({
