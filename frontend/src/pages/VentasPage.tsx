@@ -93,7 +93,7 @@ export default function VentasPage() {
         <div className="mt-3 max-h-80 space-y-2 overflow-y-auto">
           {disponibles.map((item) => <div key={item.id} className="flex items-center justify-between gap-3 rounded-lg border border-slate-800 p-3">
             <div className="min-w-0"><p className="truncate text-sm font-medium text-white">{item.nombre}</p><p className="text-xs text-slate-400">{item.tipo === "PRODUCTO" ? "Producto" : "Servicio"} · {money(item.precio, currency)}{item.controlaStock ? ` · Stock: ${item.stock}` : ""}</p></div>
-            <button type="button" disabled={item.tipo === "PRODUCTO" && item.controlaStock && item.stock <= 0} onClick={() => agregar(item)} className="shrink-0 rounded-lg bg-cyan-400 px-3 py-2 text-xs font-bold text-slate-950 disabled:opacity-40">Agregar</button>
+            <button type="button" disabled={item.tipo === "PRODUCTO" && item.controlaStock && (item.stock <= 0 || (carrito.find((linea) => linea.item.id === item.id)?.cantidad ?? 0) >= item.stock)} onClick={() => agregar(item)} className="shrink-0 rounded-lg bg-cyan-400 px-3 py-2 text-xs font-bold text-slate-950 disabled:opacity-40">Agregar</button>
           </div>)}
           {disponibles.length === 0 && <p className="py-6 text-center text-sm text-slate-500">No hay coincidencias.</p>}
         </div>
