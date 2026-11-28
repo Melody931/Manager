@@ -72,7 +72,7 @@ export default function ItemsPage() {
   }
 
   async function handleDelete(item: Item) {
-    if (!window.confirm(\`¿Eliminar "\${item.nombre}"? El artículo dejará de aparecer en el catálogo.\`)) return;
+    if (!window.confirm(`¿Eliminar "${item.nombre}"? El artículo dejará de aparecer en el catálogo.`)) return;
     setError("");
     try { await eliminarItem(item.id); await loadItems(); }
     catch (err) { setError(err instanceof ApiError ? err.message : "No se pudo eliminar el artículo."); }
