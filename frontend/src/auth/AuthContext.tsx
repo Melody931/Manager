@@ -54,19 +54,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
       .finally(() => setLoading(false));
   }, []);
 
+  const saveTokenAndLoadSession = useCallback(async (token: string) => {
+    localStorage.setItem(TOKEN_KEY, token);
+
+    try {
+      const currentSession = await getCurrentSession();
+      setSession(currentSession);
+    } catch (error) {
+      localStorage.removeItem(TOKEN_KEY);
+      setSession(null);
+      throw error;
+    }
+  }, []);
+
   const login = useCallback(async (input: LoginInput) => {
     const token = await loginRequest(input);
-    localStorage.setItem(TOKEN_KEY, token);
-    const currentSession = await getCurrentSession();
-    setSession(currentSession);
-  }, []);
+    await saveTokenAndLoadSession(token);
+  }, [saveTokenAndLoadSession]);
 
   const register = useCallback(async (input: RegisterInput) => {
     const token = await registerRequest(input);
-    localStorage.setItem(TOKEN_KEY, token);
-    const currentSession = await getCurrentSession();
-    setSession(currentSession);
-  }, []);
+    await saveTokenAndLoadSession(token);
+  }, [saveTokenAndLoadSession]);
 
   const logout = useCallback(() => {
     localStorage.removeItem(TOKEN_KEY);
