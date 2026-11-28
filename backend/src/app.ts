@@ -3,6 +3,8 @@ import cors from "cors";
 import helmet from "helmet";
 
 import authRoutes from "./modules/auth/auth.routes.js";
+import itemRoutes from "./modules/items/routes/item.routes.js";
+import clienteRoutes from "./modules/clientes/routes/cliente.routes.js";
 
 const app = express();
 
@@ -31,5 +33,7 @@ app.get("/api/health", (_req, res) => {
 
 // Rutas públicas y protegidas de autenticación.
 app.use("/auth", authRoutes);
+app.use("/items", itemRoutes);
+app.use("/clientes", clienteRoutes);
 
 export default app;
