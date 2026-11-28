@@ -25,6 +25,7 @@ export default function VentasPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [ventaSeleccionada, setVentaSeleccionada] = useState<Venta | null>(null);
 
   const cargarCatalogo = useCallback(async () => {
     try {
@@ -114,8 +115,18 @@ export default function VentasPage() {
     </div>
     <div className="mt-8 rounded-xl border border-slate-800 bg-slate-900">
       <div className="border-b border-slate-800 p-5"><h2 className="text-lg font-semibold text-white">Historial de ventas</h2><p className="mt-1 text-sm text-slate-400">{total} venta(s) registradas</p></div>
-      <div className="overflow-x-auto"><table className="w-full min-w-[600px] text-left text-sm"><thead className="bg-slate-800/70 text-xs uppercase text-slate-400"><tr><th className="px-5 py-3">Venta</th><th className="px-5 py-3">Fecha</th><th className="px-5 py-3">Cliente</th><th className="px-5 py-3">Pago</th><th className="px-5 py-3 text-right">Total</th></tr></thead><tbody className="divide-y divide-slate-800">{loading ? <tr><td colSpan={5} className="p-6 text-center text-slate-400">Cargando...</td></tr> : ventas.length === 0 ? <tr><td colSpan={5} className="p-6 text-center text-slate-400">Todavía no hay ventas.</td></tr> : ventas.map((venta) => <tr key={venta.id}><td className="px-5 py-4 font-medium text-white">#{venta.id}</td><td className="px-5 py-4 text-slate-300">{new Date(venta.fecha).toLocaleString("es-DO")}</td><td className="px-5 py-4 text-slate-300">{venta.cliente?.nombre || "Sin cliente"}</td><td className="px-5 py-4 text-slate-300">{venta.metodoPago}</td><td className="px-5 py-4 text-right font-semibold text-white">{money(venta.total, currency)}</td></tr>)}</tbody></table></div>
+      <div className="overflow-x-auto"><table className="w-full min-w-[600px] text-left text-sm"><thead className="bg-slate-800/70 text-xs uppercase text-slate-400"><tr><th className="px-5 py-3">Venta</th><th className="px-5 py-3">Fecha</th><th className="px-5 py-3">Cliente</th><th className="px-5 py-3">Pago</th><th className="px-5 py-3 text-right">Total</th></tr></thead><tbody className="divide-y divide-slate-800">{loading ? <tr><td colSpan={5} className="p-6 text-center text-slate-400">Cargando...</td></tr> : ventas.length === 0 ? <tr><td colSpan={5} className="p-6 text-center text-slate-400">Todavía no hay ventas.</td></tr> : ventas.map((venta) => <tr key={venta.id}><td className="px-5 py-4"><button type="button" onClick={() => setVentaSeleccionada(venta)} className="font-medium text-cyan-300 hover:text-cyan-200">#{venta.id} · Ver detalle</button></td><td className="px-5 py-4 text-slate-300">{new Date(venta.fecha).toLocaleString("es-DO")}</td><td className="px-5 py-4 text-slate-300">{venta.cliente?.nombre || "Sin cliente"}</td><td className="px-5 py-4 text-slate-300">{venta.metodoPago}</td><td className="px-5 py-4 text-right font-semibold text-white">{money(venta.total, currency)}</td></tr>)}</tbody></table></div>
       <div className="flex items-center justify-between border-t border-slate-800 px-5 py-4 text-sm text-slate-400"><span>Página {pagina} de {paginas}</span><div className="flex gap-2"><button disabled={pagina <= 1 || loading} onClick={() => setPagina((p) => p - 1)} className="rounded border border-slate-700 px-3 py-1.5 disabled:opacity-40">Anterior</button><button disabled={pagina >= paginas || loading} onClick={() => setPagina((p) => p + 1)} className="rounded border border-slate-700 px-3 py-1.5 disabled:opacity-40">Siguiente</button></div></div>
     </div>
+    {ventaSeleccionada && <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/70 p-4">
+      <div className="my-8 w-full max-w-xl rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
+        <div className="flex items-center justify-between"><div><h2 className="text-xl font-bold text-white">Venta #{ventaSeleccionada.id}</h2><p className="mt-1 text-sm text-slate-400">{new Date(ventaSeleccionada.fecha).toLocaleString("es-DO")}</p></div><button type="button" onClick={() => setVentaSeleccionada(null)} className="text-xl text-slate-400" aria-label="Cerrar">×</button></div>
+        <p className="mt-4 text-sm text-slate-300">Cliente: {ventaSeleccionada.cliente?.nombre || "Sin cliente"} · Pago: {ventaSeleccionada.metodoPago}</p>
+        <div className="mt-4 divide-y divide-slate-800 rounded-lg border border-slate-800">
+          {ventaSeleccionada.detalles.map((detalle) => <div key={detalle.id} className="flex items-center justify-between gap-3 p-3"><div><p className="text-sm font-medium text-white">{detalle.item.nombre}</p><p className="text-xs text-slate-400">{detalle.cantidad} × {money(detalle.precioUnitario, currency)}</p></div><span className="text-sm font-semibold text-white">{money((Math.round(Number(detalle.precioUnitario) * 100) * detalle.cantidad / 100).toFixed(2), currency)}</span></div>)}
+        </div>
+        <div className="mt-4 flex justify-between border-t border-slate-800 pt-4"><span className="text-slate-400">Total</span><strong className="text-xl text-white">{money(ventaSeleccionada.total, currency)}</strong></div>
+      </div>
+    </div>}
   </section>;
 }
