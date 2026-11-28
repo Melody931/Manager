@@ -35,7 +35,7 @@ export async function crearVenta(negocioId: number, usuarioId: number, datos: Cr
       throw new VentaServiceError("Uno o más artículos no existen o no pertenecen a este negocio.", "ITEM_NOT_FOUND", 404);
     }
 
-    const porId = new Map(items.map((item) => [item.id, item]));
+    const porId = new Map<number, (typeof items)[number]>(items.map((item) => [item.id, item] as const));
     let totalCentavos = 0n;
     const detalles = datos.detalles.map((linea) => {
       const item = porId.get(linea.itemId)!;
