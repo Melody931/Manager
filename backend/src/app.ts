@@ -5,6 +5,8 @@ import helmet from "helmet";
 import authRoutes from "./modules/auth/auth.routes.js";
 import itemRoutes from "./modules/items/routes/item.routes.js";
 import clienteRoutes from "./modules/clientes/routes/cliente.routes.js";
+import ventaRoutes from "./modules/ventas/routes/venta.routes.js";
+import gastoRoutes from "./modules/gastos/routes/gasto.routes.js";
 
 const app = express();
 
@@ -35,5 +37,7 @@ app.get("/api/health", (_req, res) => {
 app.use("/auth", authRoutes);
 app.use("/items", itemRoutes);
 app.use("/clientes", clienteRoutes);
+app.use("/ventas", ventaRoutes);
+app.use("/gastos", gastoRoutes);
 
 export default app;
