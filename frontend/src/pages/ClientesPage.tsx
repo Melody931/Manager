@@ -53,7 +53,7 @@ export default function ClientesPage() {
   }
 
   async function handleDelete(cliente: Cliente) {
-    if (!window.confirm(\`¿Eliminar a "\${cliente.nombre}"?\`)) return;
+    if (!window.confirm(`¿Eliminar a "${cliente.nombre}"?`)) return;
     setError("");
     try { await eliminarCliente(cliente.id); await loadClientes(); }
     catch (err) { setError(err instanceof ApiError ? err.message : "No se pudo eliminar el cliente. Puede tener ventas asociadas."); }
