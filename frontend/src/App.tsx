@@ -6,6 +6,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ClientesPage from "./pages/ClientesPage";
 import DashboardPage from "./pages/DashboardPage";
 import ItemsPage from "./pages/ItemsPage";
+import VentasPage from "./pages/VentasPage";
+import GastosPage from "./pages/GastosPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -22,6 +24,8 @@ function App() {
               <Route path="/" element={<DashboardPage />} />
               <Route path="/articulos" element={<ItemsPage />} />
               <Route path="/clientes" element={<ClientesPage />} />
+              <Route path="/ventas" element={<VentasPage />} />
+              <Route path="/gastos" element={<GastosPage />} />
             </Route>
           </Route>
 
