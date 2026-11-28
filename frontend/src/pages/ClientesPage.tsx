@@ -66,7 +66,7 @@ export default function ClientesPage() {
         <button onClick={openNew} className="rounded-lg bg-cyan-400 px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300">+ Nuevo cliente</button>
       </div>
 
-      <div className="mt-7 rounded-xl border border-slate-800 bg-slate-900 p-4"><input value={busqueda} onChange={(e) => { setBusqueda(e.target.value); setPagina(1); }} placeholder="Buscar cliente por nombre..." className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-cyan-400" /></div>
+      <div className="mt-7 rounded-xl border border-slate-800 bg-slate-900 p-4"><input value={busqueda} onChange={(e) => { setBusqueda(e.target.value); setPagina(1); }} placeholder="Buscar cliente por nombre o teléfono..." className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-sm text-white outline-none focus:border-cyan-400" /></div>
       {error && <p role="alert" className="mt-4 rounded-lg border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-300">{error}</p>}
 
       <div className="mt-5 overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
