@@ -44,6 +44,9 @@ export async function crearVenta(negocioId: number, usuarioId: number, datos: Cr
       }
       const precio = aCentavos(item.precio.toString());
       totalCentavos += precio * BigInt(linea.cantidad);
+      if (totalCentavos > 999999999999n) {
+        throw new VentaServiceError("El total de la venta supera el máximo permitido.", "SALE_TOTAL_TOO_LARGE", 400);
+      }
       return {
         itemId: item.id,
         cantidad: linea.cantidad,
