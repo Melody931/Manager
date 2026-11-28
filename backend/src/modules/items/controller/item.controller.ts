@@ -1,5 +1,4 @@
 import type { RequestHandler } from "express";
-import { prisma } from "../../../config/prisma.js";
 import { actualizarItemSchema, crearItemSchema, listarItemsQuerySchema } from "../schemas/item.schema.js";
 import * as itemService from "../service/item.service.js";
 
