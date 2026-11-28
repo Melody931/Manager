@@ -24,7 +24,7 @@ export async function listarClientes(params: { busqueda?: string; pagina?: numbe
   if (params.busqueda) query.set("busqueda", params.busqueda);
   query.set("pagina", String(params.pagina ?? 1));
   query.set("limite", String(params.limite ?? 10));
-  return apiRequest<ClientesResponse>(\`/clientes?\${query.toString()}\`);
+  return apiRequest<ClientesResponse>(`/clientes?${query.toString()}`);
 }
 
 export async function crearCliente(input: ClienteInput) {
@@ -32,9 +32,9 @@ export async function crearCliente(input: ClienteInput) {
 }
 
 export async function actualizarCliente(id: number, input: Partial<ClienteInput>) {
-  return apiRequest<{ data: Cliente }>(\`/clientes/\${id}\`, { method: "PUT", body: JSON.stringify(input) });
+  return apiRequest<{ data: Cliente }>(`/clientes/${id}`, { method: "PUT", body: JSON.stringify(input) });
 }
 
 export async function eliminarCliente(id: number) {
-  return apiRequest<{ data: { mensaje: string } }>(\`/clientes/\${id}\`, { method: "DELETE" });
+  return apiRequest<{ data: { mensaje: string } }>(`/clientes/${id}`, { method: "DELETE" });
 }
