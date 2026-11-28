@@ -1,22 +1,28 @@
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+import { AuthProvider } from "./auth/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import DashboardPage from "./pages/DashboardPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-5xl font-bold text-white">
-          Manager
-        </h1>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/registro" element={<RegisterPage />} />
 
-        <p className="mt-4 text-slate-400">
-          Sistema de gestión empresarial
-        </p>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<DashboardPage />} />
+          </Route>
 
-        <span className="mt-6 inline-block rounded-full bg-emerald-500/10 px-4 py-2 text-sm text-emerald-400">
-          Frontend iniciado correctamente
-        </span>
-      </div>
-    </main>
-  )
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
