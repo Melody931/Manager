@@ -5,6 +5,8 @@ const links = [
   { to: "/", label: "Resumen", icon: "▦", end: true },
   { to: "/articulos", label: "Artículos", icon: "□" },
   { to: "/clientes", label: "Clientes", icon: "♙" },
+  { to: "/ventas", label: "Ventas", icon: "$" },
+  { to: "/gastos", label: "Gastos", icon: "↗" },
 ];
 
 export default function AppLayout() {
